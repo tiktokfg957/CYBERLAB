@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Видео-уроки | CYBERLAB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CYBERLAB</h1>
+                <span>STANDOFF 2</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="faceit.html">Faceit-система</a></li>
+                    <li><a href="deathmatches.html">Deathmatches</a></li>
+                    <li><a href="battlepass.html">Battlepass</a></li>
+                    <li><a href="giveaways.html">Розыгрыши</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
+                    <li><a href="videos.html" class="active">Видео-уроки</a></li>
+                </ul>
+            </nav>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Видео-уроки</h1>
+            <div class="video-filters">
+                <button class="filter-btn active" data-cat="all">Все</button>
+                <button class="filter-btn" data-cat="aim">Аим/стрельба</button>
+                <button class="filter-btn" data-cat="tactics">Тактика</button>
+                <button class="filter-btn" data-cat="settings">Настройки</button>
+            </div>
+            <div class="videos-grid" id="videosGrid"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CYBERLAB. Все права защищены. Standoff 2 – торговая марка AXLEBOLT.</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .video-filters { display: flex; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; }
+        .filter-btn { background: #2a2e3a; border: none; padding: 8px 20px; border-radius: 40px; cursor: pointer; color: white; }
+        .filter-btn.active { background: #00f2fe; color: #0a0c12; }
+        .videos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .video-card { background: rgba(20,24,32,0.7); border-radius: 24px; overflow: hidden; transition: 0.2s; }
+        .video-card:hover { transform: translateY(-4px); border-color: #00f2fe; }
+        .video-thumb { background: #1a1e2a; height: 160px; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: #00f2fe; }
+        .video-info { padding: 16px; }
+        .video-title { font-weight: bold; margin-bottom: 8px; }
+        .video-stats { font-size: 0.8rem; color: #aaa; margin-bottom: 8px; }
+        .video-desc { font-size: 0.85rem; }
+        .watch-btn { background: #00f2fe; border: none; padding: 6px 12px; border-radius: 20px; margin-top: 12px; cursor: pointer; width: 100%; }
+    </style>
+
+    <script>
+        const videos = [
+            { title: "Как настроить прицел", category: "settings", views: 1540, date: "2 дня назад", desc: "Лучшие настройки для точной стрельбы", embed: "#" },
+            { title: "Урок по стрельбе из AWM", category: "aim", views: 3200, date: "5 дней назад", desc: "Снайперская стрельба в движении", embed: "#" },
+            { title: "Тактика на карте Завод", category: "tactics", views: 2100, date: "1 неделя назад", desc: "Контроль точек и ротация", embed: "#" },
+            { title: "Секреты настройки HUD", category: "settings", views: 980, date: "3 дня назад", desc: "Удобный интерфейс", embed: "#" },
+            { title: "Практика хедшотов", category: "aim", views: 4500, date: "2 недели назад", desc: "Тренировка меткости", embed: "#" },
+            { title: "Как выигрывать клатчи", category: "tactics", views: 1870, date: "4 дня назад", desc: "Психология и позиционирование", embed: "#" }
+        ];
+
+        function renderVideos(category = "all") {
+            const container = document.getElementById("videosGrid");
+            const filtered = category === "all" ? videos : videos.filter(v => v.category === category);
+            container.innerHTML = filtered.map(v => `
+                <div class="video-card">
+                    <div class="video-thumb"><i class="fas fa-video"></i></div>
+                    <div class="video-info">
+                        <div class="video-title">${v.title}</div>
+                        <div class="video-stats"><i class="fas fa-eye"></i> ${v.views} • ${v.date}</div>
+                        <div class="video-desc">${v.desc}</div>
+                        <button class="watch-btn" data-title="${v.title}">Смотреть</button>
+                    </div>
+                </div>
+            `).join("");
+            document.querySelectorAll('.watch-btn').forEach(btn => {
+                btn.addEventListener('click', () => alert(`Видео "${btn.dataset.title}" откроется на YouTube (демо)`));
+            });
+        }
+
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                renderVideos(btn.dataset.cat);
+            });
+        });
+        renderVideos();
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
