@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battlepass | CYBERLAB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CYBERLAB</h1>
+                <span>STANDOFF 2</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="faceit.html">Faceit-система</a></li>
+                    <li><a href="deathmatches.html">Deathmatches</a></li>
+                    <li><a href="battlepass.html" class="active">Battlepass</a></li>
+                    <li><a href="giveaways.html">Розыгрыши</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
+                    <li><a href="videos.html">Видео-уроки</a></li>
+                </ul>
+            </nav>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Battlepass</h1>
+            <div class="battlepass-container">
+                <div class="bp-header">
+                    <div class="timer">
+                        <i class="fas fa-hourglass-half"></i> До конца сезона: 
+                        <span id="countdown">5 дней 12 часов</span>
+                    </div>
+                    <div class="level">Уровень <span id="currentLevel">24</span> / 50</div>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-fill" id="bpProgress" style="width: 48%;"></div>
+                </div>
+                <div class="rewards-grid" id="rewardsGrid"></div>
+                <div class="quests">
+                    <h3>Ежедневные задания</h3>
+                    <ul id="questsList"></ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CYBERLAB. Все права защищены. Standoff 2 – торговая марка AXLEBOLT.</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .battlepass-container { background: rgba(20,24,32,0.7); border-radius: 32px; padding: 24px; }
+        .bp-header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+        .progress-bar-container { background: #2a2e3a; border-radius: 20px; height: 20px; overflow: hidden; margin-bottom: 32px; }
+        .progress-fill { background: linear-gradient(90deg, #00f2fe, #4facfe); height: 100%; width: 0%; }
+        .rewards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin-bottom: 32px; }
+        .reward-card { background: #1a1e2a; border-radius: 20px; padding: 16px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
+        .reward-card.locked { opacity: 0.5; filter: grayscale(0.5); }
+        .quests ul { list-style: none; }
+        .quests li { background: #1a1e2a; margin: 8px 0; padding: 12px; border-radius: 16px; display: flex; justify-content: space-between; }
+        .quest-btn { background: #00f2fe; border: none; padding: 6px 16px; border-radius: 20px; cursor: pointer; }
+    </style>
+
+    <script>
+        const rewards = [
+            { level: 5, name: "Скин «Кибер»", icon: "🎮" },
+            { level: 10, name: "100 монет", icon: "💰" },
+            { level: 15, name: "Эмблема CYBERLAB", icon: "🏷️" },
+            { level: 20, name: "Скин «Неон»", icon: "✨" },
+            { level: 25, name: "500 монет", icon: "💰" },
+            { level: 30, name: "Легендарный кейс", icon: "📦" },
+            { level: 40, name: "Скин «Киберпунк»", icon: "🔫" },
+            { level: 50, name: "Эксклюзивный титул", icon: "👑" }
+        ];
+        const currentLevel = 24;
+        const quests = [
+            { text: "Провести 3 матча в Deathmatch", completed: false },
+            { text: "Одержать 5 побед в Faceit", completed: true },
+            { text: "Заработать 1000 очков опыта", completed: false }
+        ];
+
+        function renderBattlepass() {
+            const container = document.getElementById("rewardsGrid");
+            container.innerHTML = rewards.map(r => `
+                <div class="reward-card ${r.level > currentLevel ? 'locked' : ''}">
+                    <div style="font-size: 2rem;">${r.icon}</div>
+                    <div>${r.name}</div>
+                    <div>Уровень ${r.level}</div>
+                </div>
+            `).join("");
+            document.getElementById("currentLevel").innerText = currentLevel;
+            document.getElementById("bpProgress").style.width = `${(currentLevel / 50) * 100}%`;
+            const questList = document.getElementById("questsList");
+            questList.innerHTML = quests.map(q => `
+                <li>
+                    <span>${q.text}</span>
+                    <button class="quest-btn" ${q.completed ? 'disabled' : ''}>${q.completed ? 'Выполнено' : 'Выполнить'}</button>
+                </li>
+            `).join("");
+        }
+        renderBattlepass();
+
+        // Таймер до конца сезона (имитация)
+        function updateCountdown() {
+            const target = new Date();
+            target.setDate(target.getDate() + 5);
+            target.setHours(12,0,0);
+            const now = new Date();
+            const diff = target - now;
+            if (diff <= 0) {
+                document.getElementById("countdown").innerText = "Сезон завершён!";
+                return;
+            }
+            const days = Math.floor(diff / (1000*60*60*24));
+            const hours = Math.floor((diff % (86400000)) / 3600000);
+            document.getElementById("countdown").innerText = `${days} д ${hours} ч`;
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 3600000);
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
