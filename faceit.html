@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faceit-система | CYBERLAB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>...</header> <!-- скопировать из index.html -->
+    <main>
+        <div class="container">
+            <h1>Faceit-система</h1>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Игрок</th><th>Рейтинг</th><th>Лига</th><th>Матчи</th><th>Winrate</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>H1T_M4N</td><td>1850</td><td>Мастер</td><td>120</td><td>68%</td></tr>
+                        <tr><td>GH0ST_R1P</td><td>1720</td><td>Алмаз</td><td>98</td><td>62%</td></tr>
+                        <tr><td>QU1CK_SCOPE</td><td>1600</td><td>Платина</td><td>75</td><td>55%</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: 32px;">
+                <button id="findMatchBtn">Поиск соперника</button>
+            </div>
+        </div>
+    </main>
+    <footer>...</footer>
+    <script>
+        document.getElementById('findMatchBtn')?.addEventListener('click', () => {
+            alert('Поиск матча... (демо-режим)');
+        });
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
