@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deathmatches | CYBERLAB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CYBERLAB</h1>
+                <span>STANDOFF 2</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="faceit.html">Faceit-система</a></li>
+                    <li><a href="deathmatches.html" class="active">Deathmatches</a></li>
+                    <li><a href="battlepass.html">Battlepass</a></li>
+                    <li><a href="giveaways.html">Розыгрыши</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
+                    <li><a href="videos.html">Видео-уроки</a></li>
+                </ul>
+            </nav>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Deathmatches</h1>
+            <div class="filters">
+                <input type="text" id="searchMap" placeholder="Поиск по карте..." class="filter-input">
+                <select id="filterRules">
+                    <option value="all">Все правила</option>
+                    <option value="classic">Классика</option>
+                    <option value="hardcore">Хардкор</option>
+                </select>
+                <button id="autoMatchBtn" class="btn-primary">Автоподбор матча</button>
+            </div>
+
+            <div class="matches-list" id="deathmatchList">
+                <!-- JS заполнит -->
+            </div>
+
+            <div style="margin-top: 40px;">
+                <button id="createMatchBtn" class="btn-secondary">+ Создать собственный матч</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CYBERLAB. Все права защищены. Standoff 2 – торговая марка AXLEBOLT.</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Данные матчей
+        const deathmatches = [
+            { map: "Завод", players: 8, maxPlayers: 12, rules: "classic", mode: "Deathmatch" },
+            { map: "Залив", players: 5, maxPlayers: 10, rules: "hardcore", mode: "Team DM" },
+            { map: "Аэропорт", players: 10, maxPlayers: 16, rules: "classic", mode: "Deathmatch" },
+            { map: "Тренировка", players: 3, maxPlayers: 8, rules: "classic", mode: "FFA" },
+            { map: "Кладбище", players: 7, maxPlayers: 12, rules: "hardcore", mode: "Deathmatch" }
+        ];
+
+        function renderDeathmatches(filterMap = "", filterRules = "all") {
+            const container = document.getElementById("deathmatchList");
+            if (!container) return;
+            const filtered = deathmatches.filter(m => 
+                (filterMap === "" || m.map.toLowerCase().includes(filterMap.toLowerCase())) &&
+                (filterRules === "all" || m.rules === filterRules)
+            );
+            container.innerHTML = filtered.map(m => `
+                <div class="match-card">
+                    <h3>${m.map}</h3>
+                    <div class="players"><i class="fas fa-user"></i> ${m.players}/${m.maxPlayers} игроков</div>
+                    <div>${m.mode} • ${m.rules === "classic" ? "Классика" : "Хардкор"}</div>
+                    <button class="btn-sm join-btn" data-map="${m.map}">Присоединиться</button>
+                </div>
+            `).join("");
+            document.querySelectorAll('.join-btn').forEach(btn => {
+                btn.addEventListener('click', () => alert(`Вы присоединились к матчу на карте ${btn.dataset.map}`));
+            });
+        }
+
+        document.getElementById("searchMap")?.addEventListener("input", (e) => {
+            renderDeathmatches(e.target.value, document.getElementById("filterRules").value);
+        });
+        document.getElementById("filterRules")?.addEventListener("change", (e) => {
+            renderDeathmatches(document.getElementById("searchMap").value, e.target.value);
+        });
+        document.getElementById("autoMatchBtn")?.addEventListener("click", () => alert("Поиск подходящего матча... (демо)"));
+        document.getElementById("createMatchBtn")?.addEventListener("click", () => {
+            const mapName = prompt("Введите название карты:");
+            if (mapName) alert(`Матч на карте ${mapName} создан! Ожидайте игроков.`);
+        });
+
+        renderDeathmatches();
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
