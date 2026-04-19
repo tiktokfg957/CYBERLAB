@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отзывы | CYBERLAB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CYBERLAB</h1>
+                <span>STANDOFF 2</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="faceit.html">Faceit-система</a></li>
+                    <li><a href="deathmatches.html">Deathmatches</a></li>
+                    <li><a href="battlepass.html">Battlepass</a></li>
+                    <li><a href="giveaways.html">Розыгрыши</a></li>
+                    <li><a href="reviews.html" class="active">Отзывы</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
+                    <li><a href="videos.html">Видео-уроки</a></li>
+                </ul>
+            </nav>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Отзывы</h1>
+            <div class="reviews-form">
+                <h3>Оставить отзыв</h3>
+                <input type="text" id="reviewName" placeholder="Ваш никнейм" class="filter-input">
+                <textarea id="reviewText" rows="4" placeholder="Ваш отзыв..."></textarea>
+                <div class="rating">
+                    <span>Оценка: </span>
+                    <select id="reviewRating">
+                        <option value="5">5 ★</option>
+                        <option value="4">4 ★</option>
+                        <option value="3">3 ★</option>
+                        <option value="2">2 ★</option>
+                        <option value="1">1 ★</option>
+                    </select>
+                </div>
+                <button id="submitReviewBtn" class="btn-primary">Отправить на модерацию</button>
+            </div>
+            <div class="reviews-list" id="reviewsList"></div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CYBERLAB. Все права защищены. Standoff 2 – торговая марка AXLEBOLT.</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .reviews-form { background: rgba(20,24,32,0.7); border-radius: 24px; padding: 24px; margin-bottom: 32px; }
+        .reviews-form input, .reviews-form textarea, .reviews-form select { margin: 12px 0; }
+        .review-card { background: rgba(20,24,32,0.5); border-radius: 20px; padding: 20px; margin-bottom: 16px; }
+        .review-header { display: flex; justify-content: space-between; margin-bottom: 12px; }
+        .review-name { font-weight: bold; color: #00f2fe; }
+        .review-rating { color: #ffd966; }
+        .review-text { margin: 8px 0; }
+        .review-date { font-size: 0.8rem; color: #aaa; }
+    </style>
+
+    <script>
+        let reviews = [
+            { name: "H1T_M4N", text: "Отличная платформа! Все матчи проходят честно.", rating: 5, date: "2025-04-15", approved: true },
+            { name: "GH0ST_R1P", text: "Хорошие турниры, но иногда лаги.", rating: 4, date: "2025-04-10", approved: true }
+        ];
+
+        function renderReviews() {
+            const container = document.getElementById("reviewsList");
+            container.innerHTML = reviews.filter(r => r.approved).map(r => `
+                <div class="review-card">
+                    <div class="review-header">
+                        <span class="review-name">${r.name}</span>
+                        <span class="review-rating">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</span>
+                    </div>
+                    <div class="review-text">${r.text}</div>
+                    <div class="review-date">${r.date}</div>
+                </div>
+            `).join("");
+        }
+
+        document.getElementById("submitReviewBtn")?.addEventListener("click", () => {
+            const name = document.getElementById("reviewName").value.trim();
+            const text = document.getElementById("reviewText").value.trim();
+            const rating = parseInt(document.getElementById("reviewRating").value);
+            if (!name || !text) {
+                alert("Заполните никнейм и текст отзыва");
+                return;
+            }
+            // В реальном проекте отправка на сервер, здесь имитация модерации
+            alert("Спасибо! Ваш отзыв отправлен на модерацию и появится после проверки.");
+            // Добавляем в локальный список неодобренным (не отобразится)
+            reviews.push({ name, text, rating, date: new Date().toISOString().slice(0,10), approved: false });
+            document.getElementById("reviewName").value = "";
+            document.getElementById("reviewText").value = "";
+            renderReviews();
+        });
+        renderReviews();
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
