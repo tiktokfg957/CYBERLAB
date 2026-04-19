@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Профиль | CYBERLAB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CYBERLAB</h1>
+                <span>STANDOFF 2</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="faceit.html">Faceit-система</a></li>
+                    <li><a href="deathmatches.html">Deathmatches</a></li>
+                    <li><a href="battlepass.html">Battlepass</a></li>
+                    <li><a href="giveaways.html">Розыгрыши</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="profile.html" class="active">Профиль</a></li>
+                    <li><a href="videos.html">Видео-уроки</a></li>
+                </ul>
+            </nav>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Профиль игрока</h1>
+            <div class="profile-header">
+                <div class="avatar">👤</div>
+                <div class="info">
+                    <h2 id="playerNick">H1T_M4N</h2>
+                    <div>Рейтинг: <span id="playerRating">1850</span> (Мастер)</div>
+                    <div>Матчей: <span id="playerMatches">120</span></div>
+                    <div>Побед: <span id="playerWins">82</span> (68%)</div>
+                </div>
+            </div>
+            <div class="profile-tabs">
+                <button id="tabStats" class="btn-primary active">Статистика</button>
+                <button id="tabHistory" class="btn-secondary">История матчей</button>
+                <button id="tabAchievements" class="btn-secondary">Достижения</button>
+                <button id="tabSettings" class="btn-secondary">Настройки профиля</button>
+            </div>
+            <div id="statsPanel" class="profile-panel">
+                <div class="stats-grid">
+                    <div class="stat-card">KD: <span id="kd">2.1</span></div>
+                    <div class="stat-card">HS%: <span id="hs">34%</span></div>
+                    <div class="stat-card">Урон/матч: <span id="dmg">320</span></div>
+                    <div class="stat-card">Сыграно часов: <span id="hours">540</span></div>
+                </div>
+            </div>
+            <div id="historyPanel" class="profile-panel" style="display:none;">
+                <div class="table-container">
+                    <table id="matchesHistory">
+                        <thead><tr><th>Дата</th><th>Режим</th><th>Карта</th><th>Результат</th><th>Счёт</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div id="achievementsPanel" class="profile-panel" style="display:none;">
+                <div class="achievements-list" id="achievementsList"></div>
+            </div>
+            <div id="settingsPanel" class="profile-panel" style="display:none;">
+                <div class="settings-form">
+                    <label>Видимость профиля:</label>
+                    <select id="visibilitySelect">
+                        <option value="public">Публичный</option>
+                        <option value="private">Только друзьям</option>
+                    </select>
+                    <button id="saveSettingsBtn" class="btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CYBERLAB. Все права защищены. Standoff 2 – торговая марка AXLEBOLT.</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .profile-header { display: flex; gap: 24px; align-items: center; background: rgba(20,24,32,0.7); border-radius: 32px; padding: 24px; margin-bottom: 32px; }
+        .avatar { font-size: 5rem; background: #2a2e3a; width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .profile-tabs { display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+        .profile-panel { background: rgba(20,24,32,0.5); border-radius: 24px; padding: 24px; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+        .stat-card { background: #1a1e2a; padding: 20px; border-radius: 20px; text-align: center; }
+        .achievements-list { display: flex; flex-wrap: wrap; gap: 16px; }
+        .achievement { background: #1a1e2a; border-radius: 20px; padding: 16px; width: 150px; text-align: center; }
+        .settings-form { max-width: 400px; }
+        .settings-form select { margin: 12px 0; }
+    </style>
+
+    <script>
+        const matchesHistory = [
+            { date: "2025-04-18", mode: "Deathmatch", map: "Завод", result: "Победа", score: "16:12" },
+            { date: "2025-04-17", mode: "Faceit", map: "Залив", result: "Поражение", score: "10:13" },
+            { date: "2025-04-16", mode: "Deathmatch", map: "Аэропорт", result: "Победа", score: "20:15" },
+            { date: "2025-04-15", mode: "Faceit", map: "Кладбище", result: "Победа", score: "13:11" }
+        ];
+        const achievements = [
+            { name: "Мастер клинча", desc: "Выиграть 10 матчей подряд" },
+            { name: "Снайпер", desc: "Сделать 1000 хедшотов" },
+            { name: "Ветеран", desc: "Сыграть 100 матчей" }
+        ];
+
+        function renderHistory() {
+            const tbody = document.querySelector("#matchesHistory tbody");
+            tbody.innerHTML = matchesHistory.map(m => `
+                <tr><td>${m.date}</td><td>${m.mode}</td><td>${m.map}</td><td style="color:${m.result === 'Победа' ? '#4caf50' : '#f44336'}">${m.result}</td><td>${m.score}</td></tr>
+            `).join("");
+        }
+        function renderAchievements() {
+            const container = document.getElementById("achievementsList");
+            container.innerHTML = achievements.map(a => `
+                <div class="achievement"><i class="fas fa-trophy"></i><br><strong>${a.name}</strong><br><small>${a.desc}</small></div>
+            `).join("");
+        }
+
+        document.getElementById("tabStats")?.addEventListener("click", () => switchPanel("stats"));
+        document.getElementById("tabHistory")?.addEventListener("click", () => switchPanel("history"));
+        document.getElementById("tabAchievements")?.addEventListener("click", () => switchPanel("achievements"));
+        document.getElementById("tabSettings")?.addEventListener("click", () => switchPanel("settings"));
+
+        function switchPanel(panel) {
+            document.getElementById("statsPanel").style.display = "none";
+            document.getElementById("historyPanel").style.display = "none";
+            document.getElementById("achievementsPanel").style.display = "none";
+            document.getElementById("settingsPanel").style.display = "none";
+            document.getElementById(`${panel}Panel`).style.display = "block";
+            // обновляем стили кнопок
+            [document.getElementById("tabStats"), document.getElementById("tabHistory"), document.getElementById("tabAchievements"), document.getElementById("tabSettings")].forEach(btn => {
+                btn.classList.add("btn-secondary");
+                btn.classList.remove("btn-primary");
+            });
+            document.getElementById(`tab${panel.charAt(0).toUpperCase() + panel.slice(1)}`).classList.add("btn-primary");
+        }
+
+        renderHistory();
+        renderAchievements();
+
+        document.getElementById("saveSettingsBtn")?.addEventListener("click", () => {
+            alert("Настройки сохранены (демо)");
+        });
+    </script>
+    <script src="js/main.js"></script>
+</body>
+</html>
