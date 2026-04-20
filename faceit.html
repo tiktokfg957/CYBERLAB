@@ -36,42 +36,70 @@
         <div class="container">
             <h1>Faceit-система</h1>
             <div class="table-container">
-                <table id="ratingTable">
+                <table id="faceitTable">
                     <thead>
-                        <tr><th data-sort="name">Игрок <i class="fas fa-sort"></i></th><th data-sort="rating">Рейтинг <i class="fas fa-sort"></i></th><th>Лига</th><th data-sort="matches">Матчи <i class="fas fa-sort"></i></th><th data-sort="winrate">Winrate <i class="fas fa-sort"></i></th></tr>
+                        <tr><th>Игрок</th><th>Рейтинг</th><th>Лига</th><th>Матчи</th><th>Winrate</th></tr>
                     </thead>
                     <tbody>
                         <tr><td>H1T_M4N</td><td>1850</td><td>Мастер</td><td>120</td><td>68%</td></tr>
                         <tr><td>GH0ST_R1P</td><td>1720</td><td>Алмаз</td><td>98</td><td>62%</td></tr>
                         <tr><td>QU1CK_SCOPE</td><td>1600</td><td>Платина</td><td>75</td><td>55%</td></tr>
-                        <tr><td>FR0ST_GG</td><td>1550</td><td>Золото</td><td>60</td><td>52%</td></tr>
                     </tbody>
                 </table>
             </div>
             <div style="margin-top: 32px;">
-                <button id="findMatchBtn" class="btn-primary">Поиск соперника</button>
+                <button id="findMatchBtn">Поиск соперника</button>
             </div>
         </div>
     </main>
 
-    <!-- Модальное окно поиска матча -->
-    <div id="matchSearchModal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <h3>Поиск матча</h3>
-            <div class="search-status">
-                <div class="spinner"></div>
-                <p id="searchMessage">Ищем соперника...</p>
-                <div class="timer" id="searchTimer">0 сек</div>
+    <!-- Модальное окно лобби -->
+    <div id="lobbyModal" class="modal">
+        <div class="lobby-container">
+            <div class="lobby-header">
+                <h2>Лобби</h2>
+                <button id="closeLobbyBtn" class="close-lobby">&times;</button>
             </div>
-            <div id="matchResult" style="display:none;"></div>
-            <button id="cancelSearchBtn" class="btn-secondary">Отмена</button>
+            <div class="lobby-content">
+                <!-- Левая колонка: наша команда -->
+                <div class="team-card">
+                    <h3>Ваша команда</h3>
+                    <div class="team-players">
+                        <div class="player-row" id="currentUserRow">You</div>
+                        <div class="player-row empty-slot" id="emptySlot1">+ Пригласить друга</div>
+                        <div class="player-row empty-slot" id="emptySlot2">+ Пригласить друга</div>
+                        <div class="player-row empty-slot" id="emptySlot3">+ Пригласить друга</div>
+                        <div class="player-row empty-slot" id="emptySlot4">+ Пригласить друга</div>
+                    </div>
+                    <button id="inviteFriendBtn" class="invite-btn">Пригласить друга</button>
+                </div>
+
+                <!-- Центр: карта и таймер -->
+                <div class="match-info">
+                    <div class="map-name" id="mapName">Завод</div>
+                    <div class="timer" id="timer">00:00</div>
+                    <div class="timer-label">до начала матча</div>
+                </div>
+
+                <!-- Правая колонка: команда соперников -->
+                <div class="team-card">
+                    <h3>Команда соперников</h3>
+                    <div class="team-players">
+                        <div class="player-row opponent-slot">TBD</div>
+                        <div class="player-row opponent-slot">TBD</div>
+                        <div class="player-row opponent-slot">TBD</div>
+                        <div class="player-row opponent-slot">TBD</div>
+                        <div class="player-row opponent-slot">TBD</div>
+                    </div>
+                </div>
+            </div>
+            <button id="leaveLobbyBtn" class="leave-lobby">Покинуть лобби</button>
         </div>
     </div>
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 CYBERLAB. Все права защищены.</p>
+            <p>&copy; 2025 CYBERLAB. Все права защищены. Standoff 2 – торговая марка AXLEBOLT.</p>
             <div class="socials">
                 <a href="#"><i class="fab fa-vk"></i></a>
                 <a href="#"><i class="fab fa-telegram"></i></a>
