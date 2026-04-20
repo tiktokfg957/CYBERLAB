@@ -47,53 +47,18 @@
                     </tbody>
                 </table>
             </div>
-            <div style="margin-top: 32px;">
+            <div style="margin-top: 32px; display: flex; gap: 16px;">
                 <button id="findMatchBtn">Поиск соперника</button>
+                <button id="createLobbyBtn">Создать лобби</button>
             </div>
         </div>
     </main>
 
-    <!-- Модальное окно лобби -->
-    <div id="lobbyModal" class="modal">
-        <div class="lobby-container">
-            <div class="lobby-header">
-                <h2>Лобби</h2>
-                <button id="closeLobbyBtn" class="close-lobby">&times;</button>
-            </div>
-            <div class="lobby-content">
-                <!-- Левая колонка: наша команда -->
-                <div class="team-card">
-                    <h3>Ваша команда</h3>
-                    <div class="team-players">
-                        <div class="player-row" id="currentUserRow">You</div>
-                        <div class="player-row empty-slot" id="emptySlot1">+ Пригласить друга</div>
-                        <div class="player-row empty-slot" id="emptySlot2">+ Пригласить друга</div>
-                        <div class="player-row empty-slot" id="emptySlot3">+ Пригласить друга</div>
-                        <div class="player-row empty-slot" id="emptySlot4">+ Пригласить друга</div>
-                    </div>
-                    <button id="inviteFriendBtn" class="invite-btn">Пригласить друга</button>
-                </div>
-
-                <!-- Центр: карта и таймер -->
-                <div class="match-info">
-                    <div class="map-name" id="mapName">Завод</div>
-                    <div class="timer" id="timer">00:00</div>
-                    <div class="timer-label">до начала матча</div>
-                </div>
-
-                <!-- Правая колонка: команда соперников -->
-                <div class="team-card">
-                    <h3>Команда соперников</h3>
-                    <div class="team-players">
-                        <div class="player-row opponent-slot">TBD</div>
-                        <div class="player-row opponent-slot">TBD</div>
-                        <div class="player-row opponent-slot">TBD</div>
-                        <div class="player-row opponent-slot">TBD</div>
-                        <div class="player-row opponent-slot">TBD</div>
-                    </div>
-                </div>
-            </div>
-            <button id="leaveLobbyBtn" class="leave-lobby">Покинуть лобби</button>
+    <!-- Модальное окно поиска соперника -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <p id="modalMessage">Поиск соперника...</p>
         </div>
     </div>
 
