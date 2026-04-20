@@ -14,7 +14,7 @@ function updateOnlineCount() {
 setInterval(updateOnlineCount, 10000);
 updateOnlineCount();
 
-// Топ-5 матчей (главная)
+// Топ-5 матчей (главная страница)
 const liveMatchesData = [
     { map: "Завод", players: 12, mode: "Deathmatch", time: "идет" },
     { map: "Залив", players: 8, mode: "Faceit", time: "15:30" },
@@ -72,105 +72,123 @@ if (document.getElementById('carouselSlide')) {
     document.getElementById('prevBtn')?.addEventListener('click', prevSlide);
 }
 
-// Лобби (Faceit)
-const lobbyModal = document.getElementById('lobbyModal');
-const findMatchBtn = document.getElementById('findMatchBtn');
-const closeLobbyBtn = document.getElementById('closeLobbyBtn');
-const leaveLobbyBtn = document.getElementById('leaveLobbyBtn');
-const inviteFriendBtn = document.getElementById('inviteFriendBtn');
-let timerInterval = null;
-
-const maps = ["Завод", "Залив", "Аэропорт", "Кладбище", "Тренировка"];
-
-function openLobby() {
-    // Случайная карта
-    const randomMap = maps[Math.floor(Math.random() * maps.length)];
-    document.getElementById('mapName').innerText = randomMap;
-    // Сброс таймера
-    if (timerInterval) clearInterval(timerInterval);
-    let seconds = 60; // 1 минута до начала
-    const timerElement = document.getElementById('timer');
-    timerElement.innerText = formatTime(seconds);
-    timerInterval = setInterval(() => {
-        seconds--;
-        if (seconds < 0) {
-            clearInterval(timerInterval);
-            timerElement.innerText = "00:00";
-            alert("Матч начался! Перенаправление...");
-            lobbyModal.style.display = 'none';
-            // Здесь можно сделать редирект на страницу матча, например:
-            // window.location.href = 'deathmatches.html';
-        } else {
-            timerElement.innerText = formatTime(seconds);
-        }
-    }, 1000);
-    lobbyModal.style.display = 'flex';
-}
-
-function formatTime(sec) {
-    const mins = Math.floor(sec / 60);
-    const remainSec = sec % 60;
-    return `${mins.toString().padStart(2,'0')}:${remainSec.toString().padStart(2,'0')}`;
-}
-
-function closeLobby() {
-    if (timerInterval) clearInterval(timerInterval);
-    lobbyModal.style.display = 'none';
-}
-
-if (findMatchBtn) {
-    findMatchBtn.addEventListener('click', openLobby);
-}
-if (closeLobbyBtn) closeLobbyBtn.addEventListener('click', closeLobby);
-if (leaveLobbyBtn) leaveLobbyBtn.addEventListener('click', closeLobby);
-
-if (inviteFriendBtn) {
-    inviteFriendBtn.addEventListener('click', () => {
-        alert('Ссылка-приглашение скопирована (демо-режим)');
-    });
-}
-
-// Автоподбор на странице Deathmatches
-const autoMatchBtn = document.getElementById('autoMatchBtn');
-const autoModal = document.getElementById('autoMatchModal');
-const autoModalMessage = document.getElementById('autoModalMessage');
-let autoTimeout;
-
-function startAutoMatchmaking() {
-    if (!autoModal) return;
-    autoModal.style.display = 'flex';
-    autoModalMessage.textContent = 'Поиск подходящего матча...';
-    if (autoTimeout) clearTimeout(autoTimeout);
-    autoTimeout = setTimeout(() => {
-        autoModalMessage.textContent = 'Матч найден! Перенаправление...';
+// Поиск соперника (модальное окно)
+const modal = document.getElementById('searchModal');
+const modalMessage = document.getElementById('modalMessage');
+let searchTimeout;
+function showSearchModal() {
+    if (!modal) return;
+    modal.style.display = 'flex';
+    modalMessage.textContent = 'Поиск соперника...';
+    if (searchTimeout) clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        modalMessage.textContent = 'Соперник найден! Перенаправление...';
         setTimeout(() => {
-            autoModal.style.display = 'none';
-            alert('Вы присоединены к матчу на карте "Завод".');
+            modal.style.display = 'none';
+            alert('Матч создан! Вы будете перенаправлены в лобби.');
+            // window.location.href = 'lobby.html';
         }, 1500);
-    }, 3500);
+    }, 3000);
     setTimeout(() => {
-        if (autoModal.style.display === 'flex' && autoModalMessage.textContent === 'Поиск подходящего матча...') {
-            autoModalMessage.textContent = 'Не удалось найти матч. Попробуйте позже.';
+        if (modal.style.display === 'flex' && modalMessage.textContent === 'Поиск соперника...') {
+            modalMessage.textContent = 'Не удалось найти соперника. Попробуйте позже.';
             setTimeout(() => {
-                autoModal.style.display = 'none';
+                modal.style.display = 'none';
             }, 2000);
         }
-    }, 7000);
+    }, 6000);
+}
+const findBtn = document.getElementById('findMatchBtn');
+if (findBtn) findBtn.addEventListener('click', showSearchModal);
+
+// Кнопка "Создать лобби" – переход на lobby.html
+const createLobbyBtn = document.getElementById('createLobbyBtn');
+if (createLobbyBtn) {
+    createLobbyBtn.addEventListener('click', () => {
+        window.location.href = 'lobby.html';
+    });
 }
 
-if (autoMatchBtn) {
-    autoMatchBtn.addEventListener('click', startAutoMatchmaking);
-}
+// ========== ЛОГИКА ДЛЯ СТРАНИЦЫ LOBBY ==========
+if (window.location.pathname.includes('lobby.html')) {
+    // Данные текущего пользователя (можно получить из localStorage или фиксированное)
+    const currentUser = "H1T_M4N";
+    const myTeam = [currentUser, null, null, null, null];
+    const enemyTeam = [null, null, null, null, null];
 
-// Кнопки "Присоединиться" и "Создать матч" на deathmatches.html
-document.querySelectorAll('.join-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-        alert('Вы присоединились к матчу!');
-    });
-});
-const createBtn = document.getElementById('createMatchBtn');
-if (createBtn) {
-    createBtn.addEventListener('click', () => {
-        alert('Создание матча (демо-режим)');
-    });
+    function renderTeams() {
+        const myContainer = document.getElementById('myTeamSlots');
+        const enemyContainer = document.getElementById('enemyTeamSlots');
+        if (myContainer) {
+            myContainer.innerHTML = myTeam.map((player, idx) => `
+                <div class="player-slot">
+                    <span class="name">${player ? player : `Слот ${idx+1}`}</span>
+                    ${!player && idx !== 0 ? `<button class="invite-btn" data-slot="${idx}">Пригласить</button>` : ''}
+                </div>
+            `).join('');
+        }
+        if (enemyContainer) {
+            enemyContainer.innerHTML = enemyTeam.map((player, idx) => `
+                <div class="player-slot">
+                    <span class="name">${player ? player : `Соперник ${idx+1}`}</span>
+                </div>
+            `).join('');
+        }
+        // Обработчики для кнопок приглашения
+        document.querySelectorAll('.invite-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const slot = btn.getAttribute('data-slot');
+                alert(`Приглашение отправлено игроку на слот ${slot}`);
+            });
+        });
+    }
+    renderTeams();
+
+    // Таймер обратного отсчёта
+    let timeLeft = 60; // секунд
+    const timerElement = document.getElementById('timer');
+    let timerInterval;
+    function updateTimerDisplay() {
+        if (timerElement) {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+        }
+    }
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert('Матч начался!');
+                // Здесь можно перенаправить на страницу матча
+            } else {
+                timeLeft--;
+                updateTimerDisplay();
+            }
+        }, 1000);
+    }
+    updateTimerDisplay();
+
+    const startMatchBtn = document.getElementById('startMatchBtn');
+    if (startMatchBtn) {
+        startMatchBtn.addEventListener('click', () => {
+            if (myTeam.filter(p => p !== null).length < 2) {
+                alert('Нужно минимум 2 игрока в команде!');
+                return;
+            }
+            startTimer();
+            startMatchBtn.disabled = true;
+            startMatchBtn.textContent = 'Матч начат';
+        });
+    }
+
+    const inviteFriendBtn = document.getElementById('inviteFriendBtn');
+    if (inviteFriendBtn) {
+        inviteFriendBtn.addEventListener('click', () => {
+            alert('Ссылка-приглашение скопирована (демо)');
+        });
+    }
+
+    // При изменении карты обновляем информацию (ничего дополнительного не нужно)
 }
