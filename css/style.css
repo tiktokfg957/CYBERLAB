@@ -320,3 +320,123 @@ footer {
         font-size: 2.5rem;
     }
 }
+/* Стили для лобби */
+.lobby-container {
+    background: #0a0c12;
+    border-radius: 32px;
+    width: 90%;
+    max-width: 1000px;
+    padding: 24px;
+    border: 1px solid #00f2fe;
+    box-shadow: 0 0 25px rgba(0,242,254,0.3);
+}
+.lobby-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #2a2e3a;
+    padding-bottom: 16px;
+}
+.lobby-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    border-left: none;
+    padding-left: 0;
+}
+.close-lobby {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 2rem;
+    cursor: pointer;
+}
+.close-lobby:hover {
+    color: #00f2fe;
+}
+.lobby-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+.team-card {
+    flex: 1;
+    min-width: 200px;
+    background: #1a1e2a;
+    border-radius: 24px;
+    padding: 16px;
+}
+.team-card h3 {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #00f2fe;
+}
+.team-players {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.player-row {
+    background: #2a2e3a;
+    padding: 10px;
+    border-radius: 12px;
+    text-align: center;
+}
+.empty-slot {
+    color: #aaa;
+    border: 1px dashed #555;
+    background: transparent;
+    cursor: pointer;
+}
+.empty-slot:hover {
+    border-color: #00f2fe;
+    color: #00f2fe;
+}
+.opponent-slot {
+    background: #2a2e3a;
+    color: #ccc;
+}
+.match-info {
+    flex: 1;
+    min-width: 200px;
+    background: #1a1e2a;
+    border-radius: 24px;
+    padding: 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.map-name {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 16px;
+    color: #00f2fe;
+}
+.timer {
+    font-size: 3rem;
+    font-weight: bold;
+    font-family: monospace;
+}
+.timer-label {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+.invite-btn, .leave-lobby {
+    margin-top: 16px;
+    width: 100%;
+}
+.leave-lobby {
+    background: #f44336;
+    color: white;
+}
+.leave-lobby:hover {
+    background: #d32f2f;
+}
+@media (max-width: 768px) {
+    .lobby-content {
+        flex-direction: column;
+    }
+}
