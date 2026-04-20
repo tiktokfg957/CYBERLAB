@@ -8,33 +8,78 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <header>...</header> <!-- скопировать из index.html -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CYBERLAB</h1>
+                <span>STANDOFF 2</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="faceit.html" class="active">Faceit-система</a></li>
+                    <li><a href="deathmatches.html">Deathmatches</a></li>
+                    <li><a href="battlepass.html">Battlepass</a></li>
+                    <li><a href="giveaways.html">Розыгрыши</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
+                    <li><a href="videos.html">Видео-уроки</a></li>
+                </ul>
+            </nav>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
     <main>
         <div class="container">
             <h1>Faceit-система</h1>
             <div class="table-container">
-                <table>
+                <table id="ratingTable">
                     <thead>
-                        <tr><th>Игрок</th><th>Рейтинг</th><th>Лига</th><th>Матчи</th><th>Winrate</th></tr>
+                        <tr><th data-sort="name">Игрок <i class="fas fa-sort"></i></th><th data-sort="rating">Рейтинг <i class="fas fa-sort"></i></th><th>Лига</th><th data-sort="matches">Матчи <i class="fas fa-sort"></i></th><th data-sort="winrate">Winrate <i class="fas fa-sort"></i></th></tr>
                     </thead>
                     <tbody>
                         <tr><td>H1T_M4N</td><td>1850</td><td>Мастер</td><td>120</td><td>68%</td></tr>
                         <tr><td>GH0ST_R1P</td><td>1720</td><td>Алмаз</td><td>98</td><td>62%</td></tr>
                         <tr><td>QU1CK_SCOPE</td><td>1600</td><td>Платина</td><td>75</td><td>55%</td></tr>
+                        <tr><td>FR0ST_GG</td><td>1550</td><td>Золото</td><td>60</td><td>52%</td></tr>
                     </tbody>
                 </table>
             </div>
             <div style="margin-top: 32px;">
-                <button id="findMatchBtn">Поиск соперника</button>
+                <button id="findMatchBtn" class="btn-primary">Поиск соперника</button>
             </div>
         </div>
     </main>
-    <footer>...</footer>
-    <script>
-        document.getElementById('findMatchBtn')?.addEventListener('click', () => {
-            alert('Поиск матча... (демо-режим)');
-        });
-    </script>
+
+    <!-- Модальное окно поиска матча -->
+    <div id="matchSearchModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Поиск матча</h3>
+            <div class="search-status">
+                <div class="spinner"></div>
+                <p id="searchMessage">Ищем соперника...</p>
+                <div class="timer" id="searchTimer">0 сек</div>
+            </div>
+            <div id="matchResult" style="display:none;"></div>
+            <button id="cancelSearchBtn" class="btn-secondary">Отмена</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CYBERLAB. Все права защищены.</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
     <script src="js/main.js"></script>
 </body>
 </html>
