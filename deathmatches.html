@@ -35,40 +35,30 @@
     <main>
         <div class="container">
             <h1>Deathmatches</h1>
-
-            <!-- Блок автоподбора матча -->
-            <div style="margin-bottom: 32px;">
-                <button id="autoMatchBtn" class="btn-primary" style="width: auto; padding: 12px 28px;">Автоподбор матча</button>
-            </div>
-
-            <!-- Список активных матчей -->
-            <h2>Активные матчи</h2>
             <div class="table-container">
-                <table>
+                <table id="deathmatchTable">
                     <thead>
-                        <tr><th>Карта</th><th>Режим</th><th>Игроков</th><th>Статус</th><th></th></tr>
+                        <tr><th>Карта</th><th>Игроки</th><th>Правила</th><th>Действие</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Завод</td><td>Deathmatch</td><td>8/12</td><td>В процессе</td><td><button class="join-btn btn-sm">Присоединиться</button></td></tr>
-                        <tr><td>Залив</td><td>Командный бой</td><td>5/10</td><td>Ожидание</td><td><button class="join-btn btn-sm">Присоединиться</button></td></tr>
-                        <tr><td>Аэропорт</td><td>Deathmatch</td><td>10/12</td><td>В процессе</td><td><button class="join-btn btn-sm">Присоединиться</button></td></tr>
-                        <tr><td>Тренировка</td><td>Спавн</td><td>3/8</td><td>Ожидание</td><td><button class="join-btn btn-sm">Присоединиться</button></td></tr>
+                        <tr><td>Завод</td><td>8/12</td><td>DM классический</td><td><button class="join-btn">Присоединиться</button></td></tr>
+                        <tr><td>Залив</td><td>10/12</td><td>Только AWP</td><td><button class="join-btn">Присоединиться</button></td></tr>
+                        <tr><td>Аэропорт</td><td>5/12</td><td>Пистолеты</td><td><button class="join-btn">Присоединиться</button></td></tr>
                     </tbody>
                 </table>
             </div>
-
-            <!-- Кнопка создания матча -->
-            <div style="margin-top: 32px;">
-                <button id="createMatchBtn" class="btn-secondary">Создать Deathmatch</button>
+            <div style="margin-top: 32px; display: flex; gap: 16px;">
+                <button id="createMatchBtn">Создать матч</button>
+                <button id="autoMatchBtn">Автоподбор матча</button>
             </div>
         </div>
     </main>
 
-    <!-- Модальное окно поиска -->
-    <div id="searchModal" class="modal">
+    <!-- Модальное окно автоподбора -->
+    <div id="autoMatchModal" class="modal">
         <div class="modal-content">
             <div class="spinner"></div>
-            <p id="modalMessage">Поиск матча...</p>
+            <p id="autoModalMessage">Поиск подходящего матча...</p>
         </div>
     </div>
 
