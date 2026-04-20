@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Лобби | CYBERLAB</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Дополнительные стили для лобби */
+        .lobby-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 24px;
+            margin: 32px 0;
+            flex-wrap: wrap;
+        }
+        .team-card {
+            flex: 1;
+            background: rgba(20,24,32,0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .team-card h3 {
+            text-align: center;
+            margin-bottom: 16px;
+            color: #00f2fe;
+        }
+        .player-slot {
+            background: #1a1e2a;
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .player-slot .name {
+            font-weight: bold;
+        }
+        .player-slot .invite-btn {
+            background: #00f2fe;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        .center-info {
+            flex: 1.5;
+            text-align: center;
+            background: rgba(20,24,32,0.8);
+            border-radius: 24px;
+            padding: 20px;
+        }
+        .map-select {
+            margin: 16px 0;
+        }
+        .map-select select {
+            background: #2a2e3a;
+            color: white;
+            border: 1px solid #00f2fe;
+            padding: 8px 16px;
+            border-radius: 40px;
+        }
+        .timer {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #00f2fe;
+            margin: 16px 0;
+        }
+        .start-btn {
+            background: #00f2fe;
+            color: #0a0c12;
+            padding: 12px 32px;
+            border: none;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            .lobby-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>CYBERLAB</h1>
+                <span>STANDOFF 2</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Главная</a></li>
+                    <li><a href="faceit.html" class="active">Faceit-система</a></li>
+                    <li><a href="deathmatches.html">Deathmatches</a></li>
+                    <li><a href="battlepass.html">Battlepass</a></li>
+                    <li><a href="giveaways.html">Розыгрыши</a></li>
+                    <li><a href="reviews.html">Отзывы</a></li>
+                    <li><a href="profile.html">Профиль</a></li>
+                    <li><a href="videos.html">Видео-уроки</a></li>
+                </ul>
+            </nav>
+            <div class="burger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1>Лобби</h1>
+            <div class="lobby-container">
+                <!-- Левая таблица (наша команда) -->
+                <div class="team-card">
+                    <h3>Ваша команда</h3>
+                    <div id="myTeamSlots">
+                        <!-- JS заполнит -->
+                    </div>
+                </div>
+
+                <!-- Центральная информация -->
+                <div class="center-info">
+                    <h2>Матч</h2>
+                    <div class="map-select">
+                        <select id="mapSelect">
+                            <option value="Завод">Завод</option>
+                            <option value="Залив">Залив</option>
+                            <option value="Аэропорт">Аэропорт</option>
+                            <option value="Кладбище">Кладбище</option>
+                        </select>
+                    </div>
+                    <div class="timer" id="timer">00:00</div>
+                    <button id="startMatchBtn" class="start-btn">Начать матч</button>
+                    <button id="inviteFriendBtn" style="margin-top: 16px; background: transparent; border: 1px solid #00f2fe;">Пригласить друга</button>
+                </div>
+
+                <!-- Правая таблица (команда соперников) -->
+                <div class="team-card">
+                    <h3>Команда соперников</h3>
+                    <div id="enemyTeamSlots">
+                        <!-- JS заполнит -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CYBERLAB. Все права защищены. Standoff 2 – торговая марка AXLEBOLT.</p>
+            <div class="socials">
+                <a href="#"><i class="fab fa-vk"></i></a>
+                <a href="#"><i class="fab fa-telegram"></i></a>
+                <a href="#"><i class="fab fa-discord"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
