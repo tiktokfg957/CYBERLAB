@@ -204,3 +204,53 @@ function getColumnIndex(sortKey) {
     return 0;
 }
 initTableSorting();
+// ... (предыдущий код остаётся без изменений) ...
+
+// Автоподбор матча на странице Deathmatches
+const autoMatchBtn = document.getElementById('autoMatchBtn');
+const autoModal = document.getElementById('autoMatchModal');
+const autoModalMessage = document.getElementById('autoModalMessage');
+let autoTimeout;
+
+function startAutoMatchmaking() {
+    if (!autoModal) return;
+    autoModal.style.display = 'flex';
+    autoModalMessage.textContent = 'Поиск подходящего матча...';
+    if (autoTimeout) clearTimeout(autoTimeout);
+    autoTimeout = setTimeout(() => {
+        autoModalMessage.textContent = 'Матч найден! Перенаправление...';
+        setTimeout(() => {
+            autoModal.style.display = 'none';
+            alert('Вы присоединены к матчу на карте "Завод".');
+            // можно сделать редирект на страницу матча, например:
+            // window.location.href = 'deathmatches.html';
+        }, 1500);
+    }, 3500);
+    setTimeout(() => {
+        if (autoModal.style.display === 'flex' && autoModalMessage.textContent === 'Поиск подходящего матча...') {
+            autoModalMessage.textContent = 'Не удалось найти матч. Попробуйте позже.';
+            setTimeout(() => {
+                autoModal.style.display = 'none';
+            }, 2000);
+        }
+    }, 7000);
+}
+
+if (autoMatchBtn) {
+    autoMatchBtn.addEventListener('click', startAutoMatchmaking);
+}
+
+// Обработка кнопок "Присоединиться" в таблице
+document.querySelectorAll('.join-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        alert('Вы присоединились к матчу!');
+    });
+});
+
+// Кнопка "Создать матч"
+const createBtn = document.getElementById('createMatchBtn');
+if (createBtn) {
+    createBtn.addEventListener('click', () => {
+        alert('Создание матча (демо-режим)');
+    });
+}
