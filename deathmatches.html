@@ -35,25 +35,42 @@
     <main>
         <div class="container">
             <h1>Deathmatches</h1>
-            <div class="filters">
-                <input type="text" id="searchMap" placeholder="Поиск по карте..." class="filter-input">
-                <select id="filterRules">
-                    <option value="all">Все правила</option>
-                    <option value="classic">Классика</option>
-                    <option value="hardcore">Хардкор</option>
-                </select>
-                <button id="autoMatchBtn" class="btn-primary">Автоподбор матча</button>
+
+            <!-- Блок автоподбора матча -->
+            <div style="margin-bottom: 32px;">
+                <button id="autoMatchBtn" class="btn-primary" style="width: auto; padding: 12px 28px;">Автоподбор матча</button>
             </div>
 
-            <div class="matches-list" id="deathmatchList">
-                <!-- JS заполнит -->
+            <!-- Список активных матчей -->
+            <h2>Активные матчи</h2>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Карта</th><th>Режим</th><th>Игроков</th><th>Статус</th><th></th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Завод</td><td>Deathmatch</td><td>8/12</td><td>В процессе</td><td><button class="join-btn btn-sm">Присоединиться</button></td></tr>
+                        <tr><td>Залив</td><td>Командный бой</td><td>5/10</td><td>Ожидание</td><td><button class="join-btn btn-sm">Присоединиться</button></td></tr>
+                        <tr><td>Аэропорт</td><td>Deathmatch</td><td>10/12</td><td>В процессе</td><td><button class="join-btn btn-sm">Присоединиться</button></td></tr>
+                        <tr><td>Тренировка</td><td>Спавн</td><td>3/8</td><td>Ожидание</td><td><button class="join-btn btn-sm">Присоединиться</button></td></tr>
+                    </tbody>
+                </table>
             </div>
 
-            <div style="margin-top: 40px;">
-                <button id="createMatchBtn" class="btn-secondary">+ Создать собственный матч</button>
+            <!-- Кнопка создания матча -->
+            <div style="margin-top: 32px;">
+                <button id="createMatchBtn" class="btn-secondary">Создать Deathmatch</button>
             </div>
         </div>
     </main>
+
+    <!-- Модальное окно поиска -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <div class="spinner"></div>
+            <p id="modalMessage">Поиск матча...</p>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
@@ -66,50 +83,6 @@
         </div>
     </footer>
 
-    <script>
-        // Данные матчей
-        const deathmatches = [
-            { map: "Завод", players: 8, maxPlayers: 12, rules: "classic", mode: "Deathmatch" },
-            { map: "Залив", players: 5, maxPlayers: 10, rules: "hardcore", mode: "Team DM" },
-            { map: "Аэропорт", players: 10, maxPlayers: 16, rules: "classic", mode: "Deathmatch" },
-            { map: "Тренировка", players: 3, maxPlayers: 8, rules: "classic", mode: "FFA" },
-            { map: "Кладбище", players: 7, maxPlayers: 12, rules: "hardcore", mode: "Deathmatch" }
-        ];
-
-        function renderDeathmatches(filterMap = "", filterRules = "all") {
-            const container = document.getElementById("deathmatchList");
-            if (!container) return;
-            const filtered = deathmatches.filter(m => 
-                (filterMap === "" || m.map.toLowerCase().includes(filterMap.toLowerCase())) &&
-                (filterRules === "all" || m.rules === filterRules)
-            );
-            container.innerHTML = filtered.map(m => `
-                <div class="match-card">
-                    <h3>${m.map}</h3>
-                    <div class="players"><i class="fas fa-user"></i> ${m.players}/${m.maxPlayers} игроков</div>
-                    <div>${m.mode} • ${m.rules === "classic" ? "Классика" : "Хардкор"}</div>
-                    <button class="btn-sm join-btn" data-map="${m.map}">Присоединиться</button>
-                </div>
-            `).join("");
-            document.querySelectorAll('.join-btn').forEach(btn => {
-                btn.addEventListener('click', () => alert(`Вы присоединились к матчу на карте ${btn.dataset.map}`));
-            });
-        }
-
-        document.getElementById("searchMap")?.addEventListener("input", (e) => {
-            renderDeathmatches(e.target.value, document.getElementById("filterRules").value);
-        });
-        document.getElementById("filterRules")?.addEventListener("change", (e) => {
-            renderDeathmatches(document.getElementById("searchMap").value, e.target.value);
-        });
-        document.getElementById("autoMatchBtn")?.addEventListener("click", () => alert("Поиск подходящего матча... (демо)"));
-        document.getElementById("createMatchBtn")?.addEventListener("click", () => {
-            const mapName = prompt("Введите название карты:");
-            if (mapName) alert(`Матч на карте ${mapName} создан! Ожидайте игроков.`);
-        });
-
-        renderDeathmatches();
-    </script>
     <script src="js/main.js"></script>
 </body>
 </html>
